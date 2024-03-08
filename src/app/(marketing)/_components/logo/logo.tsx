@@ -12,6 +12,7 @@ export const Logo = () => {
   return (
     <div className={"hidden md:flex items-center gap-x-2"}>
       <Image
+        priority
         src={"/logo.svg"}
         alt={"Logo"}
         height={"40"}
@@ -19,6 +20,7 @@ export const Logo = () => {
         className="dark:hidden"
       />
       <Image
+        priority
         src={"/logo-dark.svg"}
         alt={"Logo"}
         height={"40"}
