@@ -10,12 +10,14 @@ export const Heroes = () => {
           }
         >
           <Image
+            priority
             src={"/documents.png"}
             alt={"Document"}
             fill={true}
             className={"object-contain dark:hidden"}
           />
           <Image
+            priority
             src={"/documents-dark.png"}
             alt={"Document"}
             fill={true}

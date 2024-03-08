@@ -1,13 +1,23 @@
 "use client";
 
-import {cn} from "@/src/lib/utils";
+import {useConvexAuth} from "convex/react";
+import {SignInButton, UserButton} from "@clerk/clerk-react";
+import Link from "next/link";
 
+import {cn} from "@/src/lib/utils";
 import {Logo} from "../logo/logo";
 import {useScrollTop} from "@/hooks/scroll-to-top/use-scroll-top";
 import {ToggleBtn} from "@/src/components/ui/toggle-btn/toggle-btn";
+import {Button} from "@/src/components/ui/button/button";
+import {CircularProgress} from "../circular-progress/circular-progress";
 
 export const Navbar = () => {
+  const {isAuthenticated, isLoading} = useConvexAuth();
   const scrolled = useScrollTop();
+
+  const isSignin = !isAuthenticated && !isLoading;
+  const isSignout = isAuthenticated && !isLoading;
+
   return (
     <div
       className={cn(
@@ -21,6 +31,27 @@ export const Navbar = () => {
           "md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2"
         }
       >
+        {isLoading && <CircularProgress />}
+        {isSignin && (
+          <>
+            <SignInButton mode={"modal"}>
+              <Button variant="ghost" size="sm">
+                Sign in
+              </Button>
+            </SignInButton>
+            <SignInButton>
+              <Button size="sm">Get Notion Free</Button>
+            </SignInButton>
+          </>
+        )}
+        {isSignout && (
+          <>
+            <Button variant={"ghost"} size={"sm"} asChild>
+              <Link href={"/documents"}>Enter Notion</Link>
+            </Button>
+            <UserButton afterSignOutUrl="/" />
+          </>
+        )}
         <ToggleBtn />
       </div>
     </div>
