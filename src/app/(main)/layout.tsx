@@ -1,14 +1,15 @@
 "use client";
 
-import {redirect} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 import {useConvexAuth} from "convex/react";
 
 import CircularProgress from "../(marketing)/_components/circular-progress/circular-progress";
 import Navigation from "./_components/navigation/navigation";
 
-export const Layout = ({children}: {children: React.ReactNode}) => {
+export default function Layout({children}: {children: React.ReactNode}) {
   const {isAuthenticated, isLoading} = useConvexAuth();
+  const router = useRouter();
 
   if (isLoading)
     return (
@@ -18,7 +19,9 @@ export const Layout = ({children}: {children: React.ReactNode}) => {
     );
 
   if (!isAuthenticated) {
-    return redirect("/");
+    // Client-safe redirect
+    router.replace("/");
+    return null;
   }
 
   return (
@@ -27,6 +30,4 @@ export const Layout = ({children}: {children: React.ReactNode}) => {
       <main className={"flex-1 h-full overflow-y-auto"}>{children}</main>
     </div>
   );
-};
-
-export default Layout;
+}

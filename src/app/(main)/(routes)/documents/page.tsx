@@ -7,7 +7,7 @@ import {useUser} from "@clerk/clerk-react";
 import {Button} from "@/src/components/ui/button/button";
 import {PlusCircle} from "lucide-react";
 
-export const DocumentsPage = () => {
+export default function DocumentsPage() {
   const {user} = useUser();
 
   return (
@@ -38,6 +38,4 @@ export const DocumentsPage = () => {
       </Button>
     </div>
   );
-};
-
-export default DocumentsPage;
+}
