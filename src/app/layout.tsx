@@ -1,6 +1,8 @@
 import {Inter} from "next/font/google";
 import type {Metadata} from "next";
 
+import {Toaster} from "sonner";
+
 import {ThemeProvider} from "@/src/components/providers/theme/theme-provider";
 import CovexClientProvider from "@/src/components/providers/convex/convex-providers";
 
@@ -39,6 +41,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             disableTransitionOnChange
             storageKey="notion-theme"
           >
+            <Toaster position={"bottom-center"} />
             {children}
           </ThemeProvider>
         </CovexClientProvider>
