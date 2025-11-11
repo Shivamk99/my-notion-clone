@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useEffect, useState } from 'react';
 
 export const useScrollTop = (threshold = 10) => {
   const [scrolled, setScrolled] = useState(false);
@@ -12,9 +12,9 @@ export const useScrollTop = (threshold = 10) => {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return scrolled;

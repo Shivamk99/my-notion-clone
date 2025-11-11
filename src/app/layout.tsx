@@ -1,35 +1,39 @@
-import {Inter} from "next/font/google";
-import type {Metadata} from "next";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 
-import {Toaster} from "sonner";
+import { Toaster } from 'sonner';
 
-import {ThemeProvider} from "@/src/components/providers/theme/theme-provider";
-import CovexClientProvider from "@/src/components/providers/convex/convex-providers";
+import CovexClientProvider from '@/src/components/providers/convex/convex-providers';
+import { ThemeProvider } from '@/src/components/providers/theme/theme-provider';
 
-import "./globals.css";
+import './globals.css';
 
-const inter = Inter({subsets: ["latin"]});
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Notion",
-  description: "Your connected workspace for wiki, docs & projects.",
+  title: 'Notion',
+  description: 'Your connected workspace for wiki, docs & projects.',
   icons: {
     icon: [
       {
-        media: "(prefers-color-scheme: light)",
-        url: "/logo.svg",
-        href: "/logo.svg",
+        media: '(prefers-color-scheme: light)',
+        url: '/logo.svg',
+        href: '/logo.svg',
       },
       {
-        media: "(prefers-color-scheme: dark)",
-        url: "/logo-dark.svg",
-        href: "/logo-dark.svg",
+        media: '(prefers-color-scheme: dark)',
+        url: '/logo-dark.svg',
+        href: '/logo-dark.svg',
       },
     ],
   },
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -41,7 +45,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             disableTransitionOnChange
             storageKey="notion-theme"
           >
-            <Toaster position={"bottom-center"} />
+            <Toaster position={'bottom-center'} />
             {children}
           </ThemeProvider>
         </CovexClientProvider>
