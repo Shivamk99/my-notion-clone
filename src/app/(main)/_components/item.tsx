@@ -3,14 +3,29 @@
 import { useRouter } from 'next/navigation';
 
 import { useMutation } from 'convex/react';
-import { ChevronDown, ChevronRight, LucideIcon, PlusIcon } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronRight,
+  LucideIcon,
+  MoreHorizontal,
+  PlusIcon,
+  Trash,
+} from 'lucide-react';
 import { toast } from 'sonner';
 
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { useIsMac } from '@/hooks/check-mac/useIsMac';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/src/components/ui/dropdown-menu/dropdown-menu';
 import { Skeleton } from '@/src/components/ui/skeleton/skeleton';
 import { cn } from '@/src/lib/utils';
+import { useUser } from '@clerk/clerk-react';
 
 interface ItemProps {
   id?: Id<'documents'>;
@@ -42,6 +57,24 @@ export const Item = ({
 
   const { push } = useRouter();
   const create = useMutation(api.document.create);
+  const deleteDocument = useMutation(api.document.archive);
+
+  const onDelete = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log({ id });
+    if (!id) return;
+
+    const promise = deleteDocument({ id });
+
+    toast.promise(promise, {
+      loading: 'Deleting document...',
+      success: 'Document deleted successfully',
+      error: 'Failed to delete document',
+    });
+  };
+
+  const { user } = useUser();
 
   const handleExpanded = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -120,6 +153,36 @@ export const Item = ({
       )}
       {!!id && (
         <div className={'ml-auto flex items-center gap-x-2'}>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              asChild
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div
+                role={'button'}
+                className={
+                  'ml-auto h-full rounded-sm opacity-0 hover:bg-neutral-300 group-hover:opacity-100 dark:hover:bg-neutral-600'
+                }
+              >
+                <MoreHorizontal className={'h-4 w-4 text-muted-foreground'} />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className={'w-60'}
+              align={'start'}
+              side={'right'}
+              forceMount
+            >
+              <DropdownMenuItem onClick={onDelete}>
+                <Trash className={'mr-2 h-4 w-4'} />
+                Delete
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <div className={'p-2 text-xs text-muted-foreground'}>
+                Last edited by: {user?.fullName}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div
             role={'button'}
             onClick={onCreate}
