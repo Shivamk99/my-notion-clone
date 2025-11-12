@@ -1,8 +1,8 @@
 'use client';
 
-import { ElementRef, useEffect, useRef, useState } from 'react';
-
 import { usePathname } from 'next/navigation';
+
+import { ElementRef, useEffect, useRef, useState } from 'react';
 
 import { useMutation } from 'convex/react';
 import {
@@ -168,6 +168,11 @@ export const Navigation = () => {
         </div>
         <div className={'mt-4'}>
           <DocumentList />
+          <Item
+            label={'Add a page'}
+            icon={PlusCircle}
+            onClick={handleCreateDocument}
+          />
         </div>
         <div
           onMouseDown={handleMouseDown}
