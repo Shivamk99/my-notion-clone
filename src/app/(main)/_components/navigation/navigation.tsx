@@ -11,14 +11,21 @@ import {
   PlusCircle,
   Search,
   Settings,
+  Trash,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useMediaQuery } from 'usehooks-ts';
 
 import { api } from '@/convex/_generated/api';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/src/components/ui/popover/popover';
 import { cn } from '@/src/lib/utils';
 
 import { Item } from '../item';
+import { TrashBox } from './TrashBox';
 import { DocumentList } from './document-list';
 import UserItem from './user-item';
 
@@ -173,6 +180,21 @@ export const Navigation = () => {
             icon={PlusCircle}
             onClick={handleCreateDocument}
           />
+          <Popover>
+            <PopoverTrigger className={'mt-4 w-full'}>
+              <Item
+                label={'Trash'}
+                icon={Trash}
+                // onClick={handleCreateDocument}
+              />
+            </PopoverTrigger>
+            <PopoverContent
+              side={isMobile ? 'bottom' : 'right'}
+              className={'w-72 p-0'}
+            >
+              <TrashBox />
+            </PopoverContent>
+          </Popover>
         </div>
         <div
           onMouseDown={handleMouseDown}
