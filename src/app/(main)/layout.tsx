@@ -4,12 +4,14 @@ import { useRouter } from 'next/navigation';
 
 import { useConvexAuth } from 'convex/react';
 
+import { SearchCommand } from '@/src/components/ui/command/search-command';
+
 import CircularProgress from '../(marketing)/_components/circular-progress/circular-progress';
 import Navigation from './_components/navigation/navigation';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const router = useRouter();
+  const { replace } = useRouter();
 
   if (isLoading)
     return (
@@ -20,14 +22,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   if (!isAuthenticated) {
     // Client-safe redirect
-    router.replace('/');
+    replace('/');
     return null;
   }
 
   return (
     <div className={'flex h-full dark:bg-[#1F1F1F]'}>
       <Navigation />
-      <main className={'h-full flex-1 overflow-y-auto'}>{children}</main>
+      <main className={'h-full flex-1 overflow-y-auto'}>
+        <SearchCommand />
+        {children}
+      </main>
     </div>
   );
 }

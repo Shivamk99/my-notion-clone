@@ -17,6 +17,8 @@ import { toast } from 'sonner';
 import { useMediaQuery } from 'usehooks-ts';
 
 import { api } from '@/convex/_generated/api';
+import { useSearch } from '@/hooks/search/use-search';
+import { useSettings } from '@/hooks/settings/use-settings';
 import {
   Popover,
   PopoverContent,
@@ -34,6 +36,9 @@ export const Navigation = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const create = useMutation(api.document.create);
+
+  const search = useSearch();
+  const settings = useSettings();
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<'aside'>>(null);
@@ -160,13 +165,13 @@ export const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item label={'Search'} icon={Search} isSearch onClick={() => {}} />
           <Item
-            label={'Settings'}
-            icon={Settings}
+            label={'Search'}
+            icon={Search}
             isSearch
-            onClick={() => {}}
+            onClick={search.onOpen}
           />
+          <Item label={'Settings'} icon={Settings} onClick={settings.onOpen} />
           <Item
             label={'New page'}
             icon={PlusCircle}
