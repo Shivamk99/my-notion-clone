@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 
 import CovexClientProvider from '@/src/components/providers/convex/convex-providers';
+import { ModalProviders } from '@/src/components/providers/modal/modal-providers';
 import { ThemeProvider } from '@/src/components/providers/theme/theme-provider';
 
 import './globals.css';
@@ -46,6 +47,7 @@ export default function RootLayout({
             storageKey="notion-theme"
           >
             <Toaster position={'bottom-center'} />
+            <ModalProviders />
             {children}
           </ThemeProvider>
         </CovexClientProvider>
